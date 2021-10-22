@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
+
+
+<struts-config>
+	<form-beans>
+		<form-bean name="loginForm" type="com.metro.mpv.mdm.form.AdminLoginForm" />
+		<form-bean name="deviceForm" type="com.metro.mpv.mdm.form.DeviceForm" />
+		<form-bean name="tapConfigurationForm"
+			type="com.metro.mpv.mdm.form.TapConfigurationForm" />
+		<form-bean name="tapTablesForm" type="com.metro.mpv.mdm.form.TapTablesForm" />
+		<form-bean name="tapTableColumnsForm" type="com.metro.mpv.mdm.form.TapTableColumnsForm" />
+		<form-bean name="uploadForm" type="com.metro.mpv.mdm.form.UploadForm" />
+		<form-bean name="tapTransactionForm" type="com.metro.mpv.mdm.form.TapTransactionForm" />
+		<form-bean name="reportsForm" type="com.metro.mpv.mdm.form.ReportsForm" />
+		<form-bean name="ridershipInputsForm" type="com.metro.mpv.mdm.form.RidershipInputsForm" />
+		<form-bean name="railMapUploadForm" type="com.metro.mpv.mdm.form.RailMapUploadForm" />
+		<form-bean name="criminalOffenseForm" type="com.metro.mpv.mdm.form.CriminalOffenceForm" />
+		<!-- For Tap2.0 -->
+		<form-bean name="vendorSelectionForm" type="com.metro.mpv.dbc.form.VendorSelectionForm"></form-bean>
+		<form-bean name="manageAPKForm" type="com.metro.mpv.dbc.form.ManageAPKForm"></form-bean>
+        <form-bean name="developerAuthForm" type="com.metro.mpv.mdm.form.DeveloperAuthForm"></form-bean>
+		<form-bean name="groupForm" type="com.metro.mpv.mdm.form.GroupForm"></form-bean>
+		<form-bean name="vendorAccessForm" type="com.metro.mpv.mdm.form.VendorAccessForm"></form-bean>
+		<form-bean name="subAdminPermissionForm" type="com.metro.mpv.mdm.form.SubAdminPermissionForm"></form-bean>
+		<form-bean name="manageFilesForm" type="com.metro.mpv.mdm.form.ManageFilesForm"></form-bean>
+		<form-bean name="appGroupForm" type="com.metro.mpv.mdm.form.ApplicationGroupForm"></form-bean>
+		<!-- For Tap2.0 -->
+	</form-beans>
+
+	<global-exceptions>
+
+	</global-exceptions>
+
+	<global-forwards>
+		<forward name="welcome" path="/Welcome.do" />
+	</global-forwards>
+
+	<action-mappings>
+		<action path="/admin/login" type="com.metro.mpv.mdm.action.LoginAction"
+			name="loginForm" scope="request" parameter="method" validate="true"
+			input="/WEB-INF/jsp/admin/login.jsp">
+			<!-- <forward name="success" path="/WEB-INF/jsp/admin/home.jsp" /> -->
+			<forward name="success" path="/admin/device.action?method=show" />
+			<forward name="fail" path="/WEB-INF/jsp/admin/login.jsp" />
+			<!-- Tap2.0 -->
+			<forward name="vendorToMaster" path="/admin/developerAuth.action?method=show" />
+			<forward name="superAdminSuccess" path="/admin/developerAuth.action?method=show" />
+			<forward name="showsubadminreports" path="/admin/reports.action?method=show" />
+			<forward name="showFileShare" path="/admin/fileShare.action?method=fileShare" />
+		</action>
+		
+		<!-- For Tap2.0 -->
+		<action path="/admin/developerAuth" type="com.metro.mpv.mdm.action.DeveloperAuthAction"	
+		    name="developerAuthForm" scope="request" parameter="method" validate="true"
+			input="/WEB-INF/jsp/admin/accesskeys.jsp">
+			<forward name="success" path="/WEB-INF/jsp/admin/accesskeys.jsp" />
+			<forward name="showList" path="/admin/developerAuth.action?method=show" />
+			<forward name="generatekey" path="/WEB-INF/jsp/admin/developer_auth.jsp"/>
+			<forward name="showPermissions" path="/WEB-INF/jsp/admin/vendorPermissions.jsp"></forward>
+		</action>
+		
+		<action path="/admin/manageGroups" type="com.metro.mpv.mdm.action.GroupAction"	
+		    name="groupForm" scope="request" parameter="method" validate="true"
+			input="/WEB-INF/jsp/admin/addGroup.jsp">
+			<forward name="show" path="/WEB-INF/jsp/admin/addGroup.jsp" />
+			<forward name="success" path="/admin/manageGroups.action?method=show" />
+		</action>
+		
+		<action path="/admin/applicationGroups" type="com.metro.mpv.mdm.action.ApplicationGroupAction"	
+		    name="appGroupForm" scope="request" parameter="method" validate="true"
+			input="/WEB-INF/jsp/admin/applicationGroup.jsp">
+			<forward name="show" path="/WEB-INF/jsp/admin/applicationGroup.jsp" />
+			<forward name="showAdd" path="/WEB-INF/jsp/admin/createAPPGroup.jsp" />
+			<forward name="success" path="/admin/applicationGroups.action?method=show" />
+			<forward name="fail" path="/admin/applicationGroups.action?method=showAdd" />
+			<forward name="upateFail" path="/admin/applicationGroups.action?method=showEditAppGroup" />
+		</action>
+		
+		<action path="/admin/vendorAccessPermissions" type="com.metro.mpv.mdm.action.VendorAccessAction"	
+		    name="vendorAccessForm" scope="request" parameter="method" validate="true"
+			input="/WEB-INF/jsp/admin/vendorPermissions.jsp">
+			<forward name="show" path="/WEB-INF/jsp/admin/vendorPermissions.jsp" />
+			<forward name="success" path="/admin/developerAuth.action?method=show" />
+			<forward name="showSubAdminsList" path="/admin/adminusers.action?method=showVendorAdmin" />
+		</action>
+		
+		<action path="/admin/subAdminPermissions" type="com.metro.mpv.mdm.action.SubAdminPermissionAction"	
+		    name="subAdminPermissionForm" scope="request" parameter="method" validate="true"
+			input="/WEB-INF/jsp/admin/subAdminPermission.jsp">
+			<forward name="show" path="/WEB-INF/jsp/admin/subAdminPermission.jsp" />
+			<forward name="success" path="/admin/adminusers.action?method=show" />
+		</action>
+		
+		<action path="/dbc/vendorSelection" type="com.metro.mpv.dbc.action.VendorSelectionAction"
+		    name="vendorSelectionForm" scope="request" parameter="method" validate="true"
+			input="/WEB-INF/jsp/dbc/upload.jsp">
+		    <forward name="success" path="/WEB-INF/jsp/dbc/upload.jsp" />
+		    <forward name="showTapConfig" path="/WEB-INF/jsp/dbc/tap.jsp" />
+		    <forward name="showTapHistory" path="/WEB-INF/jsp/dbc/tap_history.jsp" />
+		    <forward name="showUploadHistory" path="/WEB-INF/jsp/dbc/latesthistory.jsp" />
+		    <forward name="showFileSharePage" path="/WEB-INF/jsp/dbc/fileShare.jsp" />
+		    <forward name="showManageAPKPage" path="/WEB-INF/jsp/dbc/manageAPK.jsp" />
+		    <forward name="showAddAPKPage" path="/WEB-INF/jsp/dbc/addAPK.jsp" />
+		    <forward name="searchAPK" path="/WEB-INF/jsp/dbc/searchAPK.jsp" />
+		</action>
+		
+		<action path="/dbc/manageAPK" type="com.metro.mpv.dbc.action.ManageAPKAction"	
+		    name="manageAPKForm" scope="request" parameter="method" validate="true"
+			input="/WEB-INF/jsp/dbc/manageAPK.jsp">
+			<forward name="show" path="/WEB-INF/jsp/dbc/manageAPK.jsp"/>
+			<forward name="showAddAPK" path="/WEB-INF/jsp/dbc/addAPK.jsp"/>
+			<forward name="loadManageAPKList" path="/dbc/manageAPK.action?method=show"/>
+			<forward name="vendorSelection" path="/dbc/vendorSelection.action?method=show" />
+			<forward name="seacrhResult" path="/WEB-INF/jsp/dbc/searchAPK.jsp" />
+		</action>
+		<!-- End: For Tap2.0 -->
+			
+		<action path="/admin/forgotpassword" type="com.metro.mpv.mdm.action.ForgotPasswordAction"
+			name="loginForm" scope="request" parameter="method" validate="true"
+			input="/WEB-INF/jsp/admin/forgotpassword.jsp">
+			<forward name="success" path="/WEB-INF/jsp/admin/login.jsp" />
+			<forward name="fail" path="/WEB-INF/jsp/admin/forgotpassword.jsp" />
+		</action>
+
+		<action path="/admin/device" type="com.metro.mpv.mdm.action.DeviceAction"
+			name="deviceForm" scope="request" parameter="method" validate="true"
+			input="/WEB-INF/jsp/admin/adddevice.jsp">
+			<forward name="success" path="/WEB-INF/jsp/admin/home.jsp" />
+			<forward name="details" path="/WEB-INF/jsp/admin/devicedetails.jsp" />
+			<forward name="showdetails" path="/admin/device.action?method=devicedetails" />
+			<forward name="showadd" path="/admin/device.action?method=showadd" />
+			<forward name="showadddevice" path="/WEB-INF/jsp/admin/adddevice.jsp" />
+			<forward name="list" path="/admin/device.action?method=show" />
+			<forward name="map" path="/WEB-INF/jsp/admin/location.jsp" />
+			<forward name="searchList" path="/WEB-INF/jsp/admin/search.jsp" />
+			<forward name="inspector" path="/WEB-INF/jsp/admin/inspector.jsp" />
+			<forward name="nomap" path="/WEB-INF/jsp/admin/nomap.jsp" />
+			<forward name="partlist" path="/WEB-INF/jsp/admin/devicelist_include.jsp" />
+			<forward name="manageFiles" path="/WEB-INF/jsp/admin/manageFiles.jsp" />
+			<forward name="showDeviceHistory" path="/WEB-INF/jsp/admin/deviceHistory.jsp" />
+			<forward name="searchDeviceHistory" path="/WEB-INF/jsp/admin/searchdevicehistory.jsp" />
+			<forward name="knoxStatus" path="/WEB-INF/jsp/admin/knoxStatus.jsp" />
+			<forward name="reloadKnoxStatus" path="/WEB-INF/jsp/admin/knoxStatus_list.jsp" />
+		</action>
+		
+		<action path="/admin/maps" type="com.metro.mpv.mdm.action.DeviceAction"
+			name="deviceForm" scope="request" parameter="method" validate="true"
+			input="/WEB-INF/jsp/admin/adddevice.jsp">
+			<forward name="showlastlocations" path="/WEB-INF/jsp/admin/allmobiles_locations.jsp" />
+			<forward name="nomap" path="/WEB-INF/jsp/admin/nomap.jsp" />
+		</action>
+		
+		<action path="/admin/tapconfiguration" type="com.metro.mpv.action.TapConfigurationAction"
+			name="tapConfigurationForm" scope="request" parameter="method"
+			validate="true" input="/WEB-INF/jsp/admin/tap.jsp">
+			<forward name="success" path="/WEB-INF/jsp/admin/tap.jsp" />
+			<forward name="history" path="/WEB-INF/jsp/admin/tap_history.jsp" />
+		</action>
+
+		<action path="/admin/adminusers" type="com.metro.mpv.mdm.action.AdminManagementAction"
+			name="loginForm" scope="request" parameter="method" validate="true"
+			input="/WEB-INF/jsp/admin/addadmin.jsp">
+			<!-- Tap2.0 -->
+			<forward name="showAddVendor" path="/WEB-INF/jsp/admin/addVendor.jsp"/>
+			<forward name="showEditVendorProfile" path="/WEB-INF/jsp/admin/editVendorProfile.jsp" />
+			<forward name="showDeleteVendor" path="/WEB-INF/jsp/admin/deleteVendor.jsp" />
+			<forward name="showActivateVendor" path="/WEB-INF/jsp/admin/activateVendor.jsp" />
+			<forward name="showVendorAdminList" path="/admin/adminusers.action?method=showVendorAdmin" />
+			<!-- Tap2.0 -->
+			<forward name="show" path="/WEB-INF/jsp/admin/adminlist.jsp" />
+			<forward name="list" path="/admin/adminusers.action?method=show" />
+			<forward name="showadd" path="/WEB-INF/jsp/admin/addadmin.jsp" />
+			<forward name="showreset" path="/WEB-INF/jsp/admin/resetadmin.jsp" />
+			<forward name="showchnagepassword" path="/WEB-INF/jsp/admin/changepassword.jsp" />
+			<forward name="showVendorList" path="/admin/developerAuth.action?method=show" />
+		</action>
+		
+		<action path="/admin/manageProfile" type="com.metro.mpv.mdm.action.AdminManagementAction"
+			name="loginForm" scope="request" parameter="method" validate="true"
+			input="/WEB-INF/jsp/admin/editVendorProfile.jsp">
+			<forward name="showEditVendorProfile" path="/WEB-INF/jsp/admin/editVendorProfile.jsp" />
+		</action>
+		
+		<action path="/admin/profile" type="com.metro.mpv.mdm.action.ProfileManagementAction"
+			name="loginForm" scope="request" parameter="method" validate="true"
+			input="/WEB-INF/jsp/admin/profile.jsp">
+			<forward name="show" path="/WEB-INF/jsp/admin/profile.jsp" />
+			<forward name="showchange" path="/WEB-INF/jsp/admin/changepassword.jsp" />
+			<forward name="profile" path="/admin/profile.action?method=show" />
+		</action>
+
+		<action path="/admin/taptables" type="com.metro.mpv.mdm.action.TapTablesAction"
+			name="tapTablesForm" scope="request" parameter="method" validate="true"
+			input="/WEB-INF/jsp/admin/taptables.jsp">
+			<forward name="success" path="/WEB-INF/jsp/admin/taptables.jsp" />
+			<forward name="list" path="/admin/taptables.action?method=show" />
+			<forward name="showadd" path="/WEB-INF/jsp/admin/addtaptable.jsp" />
+		</action>
+
+		<action path="/admin/taptablecolumns" type="com.metro.mpv.mdm.action.TapTableColumnsAction"
+			name="tapTableColumnsForm" scope="request" parameter="method"
+			validate="true" input="/WEB-INF/jsp/admin/taptablecolumns.jsp">
+			<forward name="success" path="/WEB-INF/jsp/admin/taptablecolumns.jsp" />
+			<forward name="showaddcolumn" path="/WEB-INF/jsp/admin/addtablecolumn.jsp" />
+			<forward name="showadd" path="/WEB-INF/jsp/admin/addtablecolumn.jsp" />
+			<forward name="addcolumn" path="/admin/taptablecolumns?method=showadd" />
+			<forward name="list" path="/admin/taptables.action?method=show" />
+		</action>
+		<action path="/admin/transactions" type="com.metro.mpv.mdm.action.TapTransactionsAction"
+			name="tapTransactionForm" scope="request" parameter="method"
+			validate="true" input="/WEB-INF/jsp/admin/tap_transactions.jsp">
+			<forward name="success" path="/admin/reports.action?method=show"/>
+			<forward name="list" path="/WEB-INF/jsp/admin/transactions.jsp" />
+
+		</action>
+		<action path="/admin/reports" type="com.metro.mpv.mdm.action.ReportsAction"
+			name="reportsForm" scope="request" parameter="method" validate="true"
+			input="/WEB-INF/jsp/admin/showreports.jsp">
+			<forward name="show" path="/WEB-INF/jsp/admin/showreports.jsp" />
+			<forward name="performance" path="/WEB-INF/jsp/admin/showperformance.jsp" />
+			<forward name="result" path="/WEB-INF/jsp/admin/reports.jsp" />
+		</action>
+		<action path="/admin/ridership" type="com.metro.mpv.mdm.action.RidershipInputsAction"
+			name="ridershipInputsForm" scope="request" parameter="method"
+			validate="true" input="/WEB-INF/jsp/admin/showridership.jsp">
+			<forward name="show" path="/WEB-INF/jsp/admin/showridership.jsp" />
+		</action>
+		<action path="/dbc/login" type="com.metro.mpv.dbc.action.DBCLoginAction"
+			name="loginForm" scope="request" parameter="method" validate="true"
+			input="/WEB-INF/jsp/dbc/login.jsp">
+			<forward name="success" path="/dbc/vendorSelection.action?method=show" />
+			<forward name="fail" path="/WEB-INF/jsp/dbc/login.jsp" />
+		</action>
+
+		<action path="/dbc/tapconfiguration" type="com.metro.mpv.action.TapConfigurationAction"
+			name="tapConfigurationForm" scope="request" parameter="method"
+			validate="true" input="/WEB-INF/jsp/dbc/tap.jsp">
+			<forward name="success" path="/WEB-INF/jsp/dbc/tap.jsp" />
+			<forward name="vendorSelection" path="/dbc/vendorSelection.action?method=show" />
+			<forward name="history" path="/WEB-INF/jsp/dbc/tap_history.jsp" />
+			<forward name="vendorSelectionHistroy" path="/dbc/vendorSelection.action?method=show" />
+		</action>
+
+		<action path="/dbc/taptables" type="com.metro.mpv.mdm.action.TapTablesAction"
+			name="tapTablesForm" scope="request" parameter="method" validate="true"
+			input="/WEB-INF/jsp/dbc/taptables.jsp">
+			<forward name="success" path="/WEB-INF/jsp/dbc/taptables.jsp" />
+			<forward name="list" path="/dbc/taptables.action?method=show" />
+			<forward name="showadd" path="/WEB-INF/jsp/dbc/addtaptable.jsp" />
+		</action>
+
+		<action path="/dbc/uploadhistory" type="com.metro.mpv.dbc.action.UploadHistoryAction"
+			scope="request" parameter="method">
+			<forward name="latest" path="/WEB-INF/jsp/dbc/latesthistory.jsp" />
+			<forward name="vendorSelction" path="/dbc/vendorSelection.action?method=show" />
+		</action>
+
+		<action path="/dbc/taptablecolumns" type="com.metro.mpv.mdm.action.TapTableColumnsAction"
+			name="tapTableColumnsForm" scope="request" parameter="method"
+			validate="true" input="/WEB-INF/jsp/dbc/taptablecolumns.jsp">
+			<forward name="success" path="/WEB-INF/jsp/dbc/taptablecolumns.jsp" />
+			<forward name="showaddcolumn" path="/WEB-INF/jsp/dbc/addtablecolumn.jsp" />
+			<forward name="showadd" path="/WEB-INF/jsp/dbc/addtablecolumn.jsp" />
+			<forward name="addcolumn" path="/dbc/taptablecolumns?method=showadd" />
+			<forward name="list" path="/dbc/taptables.action?method=show" />
+		</action>
+
+		<action path="/dbc/uploadFile" type="com.metro.mpv.dbc.action.UploadAction"
+			scope="request" parameter="method" validate="true"
+			input="/WEB-INF/jsp/dbc/upload.jsp">
+			<forward name="success" path="/dbc/vendorSelection.action?method=show" />
+		</action>
+		
+		<action path="/dbc/fileShare" type="com.metro.mpv.dbc.action.FileShareAction"
+			 scope="request" parameter="method" validate="true"
+			input="/WEB-INF/jsp/dbc/fileShare.jsp">
+			<forward name="fileShare" path="/WEB-INF/jsp/dbc/fileShare.jsp" />
+			<forward name="vendorSelection" path="/dbc/vendorSelection.action?method=show" />
+		</action>
+
+		<action path="/dbc/railmap" type="com.metro.mpv.dbc.action.RailMapUploadAction"
+			name="railMapUploadForm" scope="request" parameter="method" validate="true"
+			input="/WEB-INF/jsp/dbc/railmap.jsp">
+			<forward name="success" path="/WEB-INF/jsp/dbc/railmap.jsp" />
+		</action>
+
+		<action path="/dbc/criminaloffense" type="com.metro.mpv.dbc.action.CriminalOffenseAction"
+			name="criminalOffenseForm" scope="request" parameter="method"
+			validate="true" input="/WEB-INF/jsp/dbc/criminaloffense.jsp">
+			<forward name="success" path="/WEB-INF/jsp/dbc/criminaloffense.jsp" />
+		</action>
+		<action path="/admin/tapactivities" type="com.metro.mpv.mdm.action.TapActivitesAction"	scope="request" parameter="method" validate="true"
+			input="/WEB-INF/jsp/admin/tap_activity.jsp">
+			<forward name="success" path="/WEB-INF/jsp/admin/tap_activity.jsp" />
+		</action>
+		<action path="/admin/tapreports" type="com.metro.mpv.mdm.action.TapReportAction" 
+			name="tapTransactionForm" scope="request" parameter="method" validate="false" >
+			<forward name="reportsResult" path="/WEB-INF/jsp/admin/reportdownload.jsp" />
+		</action> 
+		<action path="/admin/managefiles" type="com.metro.mpv.mdm.action.ManageFilesAction" 
+			name="manageFilesForm" scope="request" parameter="method" validate="false" >
+			<forward name="manageFiles" path="/WEB-INF/jsp/admin/manageFiles.jsp" />
+		</action> 
+		
+	</action-mappings>
+
+	<controller processorClass="org.apache.struts.tiles.TilesRequestProcessor" />
+
+	<message-resources parameter="application" />
+
+	<!-- ========================= Tiles plugin =============================== -->
+	<!-- This plugin initialize Tiles definition factory. This later can takes 
+		some parameters explained here after. The plugin first read parameters from 
+		web.xml, thenoverload them with parameters defined here. All parameters are 
+		optional. The plugin should be declared in each struts-config file. - definitions-config: 
+		(optional) Specify configuration file names. There can be several comma separated 
+		file names (default: ?? ) - moduleAware: (optional - struts1.1) Specify if 
+		the Tiles definition factory is module aware. If true (default), there will 
+		be one factory for each Struts module. If false, there will be one common 
+		factory for all module. In this later case, it is still needed to declare 
+		one plugin per module. The factory will be initialized with parameters found 
+		in the first initialized plugin (generally the one associated with the default 
+		module). true : One factory per module. (default) false : one single shared 
+		factory for all modules - definitions-parser-validate: (optional) Specify 
+		if xml parser should validate the Tiles configuration file. true : validate. 
+		DTD should be specified in file header (default) false : no validation Paths 
+		found in Tiles definitions are relative to the main context. -->
+	<plug-in className="org.apache.struts.tiles.TilesPlugin">
+		<set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml" />
+		<set-property property="moduleAware" value="true" />
+	</plug-in>
+
+	<!-- ========================= Validator plugin ================================= -->
+	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+		<set-property property="pathnames"
+			value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml" />
+	</plug-in>
+
+</struts-config>
