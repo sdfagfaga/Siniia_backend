@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd ">
+
+
+	<bean id="actionUtils" class="com.siniia.app.utils.ActionUtils">
+	</bean>
+	<!-- <bean id="s3Utils" class="com.dream.app.utils.S3Utils">
+	</bean> -->
+	<!-- <bean id="s3Config" class="com.cricketapi.app.utils.S3Config">
+	</bean> -->
+	<!-- <bean id="cricketApiAuth" class="com.cricketapi.app.utils.CricketApiAuth">
+	</bean> -->
+</beans>
